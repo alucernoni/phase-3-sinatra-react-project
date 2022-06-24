@@ -33,10 +33,12 @@ class ApplicationController < Sinatra::Base
 
   # post new suggestion (not yet linked to ingredient)
   post "/suggestions" do
-    Suggestion.create(
+    newSuggestion = Suggestion.create(
       title: params[:title],
       suggestion_content: params[:suggestion_content]
-    ).to_json
+    )
+    Ingredient.find_or_create_by(name: params[:ingredient_name]).add_suggestions([newSuggestion.id])
+    newSuggestion.to_json
   end
 
   # delete suggestions
