@@ -46,4 +46,13 @@ class ApplicationController < Sinatra::Base
     deletedSuggestion.to_json
   end
 
+  # patch suggestion votes
+  patch "/suggestions/:id" do
+    updatedVotes = Suggestion.find(params[:id])
+    updatedVotes.update(
+      votes: params[:votes]
+    )
+    updatedVotes.to_json
+  end
+
 end
